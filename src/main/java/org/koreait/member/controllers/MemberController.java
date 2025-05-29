@@ -2,9 +2,8 @@ package org.koreait.member.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.koreait.global.exceptions.script.AlertException;
 import org.koreait.global.libs.Utils;
-import org.koreait.member.service.JoinService;
+import org.koreait.member.services.JoinService;
 import org.koreait.member.validators.JoinValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@SessionAttributes("requestLogin")
 public class MemberController {
 
     private final Utils utils;
@@ -28,6 +28,11 @@ public class MemberController {
     @ModelAttribute("addCss")
     public List<String> addCss() {
         return List.of("member/style");
+    }
+
+    @ModelAttribute("requestLogin")
+    public RequestLogin requestLogin(){
+        return new RequestLogin();
     }
 
     // 회원가입 양식
@@ -52,20 +57,31 @@ public class MemberController {
 
         joinService.process(form);
 
-        // 회원가입 성공시`
+        // 회원가입 성공시
         return "redirect:/member/login";
     }
 
     @GetMapping("/login")
-    public String login(@ModelAttribute RequestLogin form, Model model) {
+    public String login(@ModelAttribute RequestLogin form ,Errors errors, Model model) {
         commonProcess("login", model);
 
-        // error 페이지 확인을 위한 임시 조치 S
-        boolean result = false;
-        if(!result){
-            throw new AlertException("테스트 에러", HttpStatus.BAD_REQUEST);
+        /* 검증 실패 처리 S */
+
+        List<String> fieldErrors = form.getFieldErrors();
+        if(fieldErrors != null){
+            fieldErrors.forEach(s -> {
+                // 0번째 index = field
+                // 1번째 index = errorCode
+                String[] value = s.split("_");
+                errors.rejectValue(value[0], value[1]);
+            });
         }
-        // error 페이지 확인을 위한 임시 조치 E
+
+        List<String> globalErrors = form.getGlobalErrors();
+        if(globalErrors != null){
+            globalErrors.forEach(errors::reject);
+        }
+        /* 검증 실패 처리 E */
 
         return utils.tpl("member/login");
     }

@@ -8,4 +8,8 @@ public class AlertException extends CommonException {
         super(message, status);
 
     }
+
+    public AlertException(String message){
+        this(message, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -1,4 +1,4 @@
-package org.koreait.member.service;
+package org.koreait.member.services;
 
 import lombok.RequiredArgsConstructor;
 import org.koreait.member.controllers.RequestJoin;
