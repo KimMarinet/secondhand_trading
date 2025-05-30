@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class MemberController {
     }
 
     @ModelAttribute("requestLogin")
-    public RequestLogin requestLogin(){
+    public RequestLogin requestLogin() {
         return new RequestLogin();
     }
 
@@ -62,28 +63,39 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login(@ModelAttribute RequestLogin form ,Errors errors, Model model) {
+    public String login(@ModelAttribute RequestLogin form, Errors errors, Model model) {
         commonProcess("login", model);
 
         /* 검증 실패 처리 S */
-
         List<String> fieldErrors = form.getFieldErrors();
-        if(fieldErrors != null){
+        if (fieldErrors != null) {
             fieldErrors.forEach(s -> {
-                // 0번째 index = field
-                // 1번째 index = errorCode
+                // 0 - 필드, 1 - 에러코드
                 String[] value = s.split("_");
                 errors.rejectValue(value[0], value[1]);
             });
-        }
 
+        }
         List<String> globalErrors = form.getGlobalErrors();
-        if(globalErrors != null){
+        if (globalErrors != null) {
             globalErrors.forEach(errors::reject);
         }
         /* 검증 실패 처리 E */
 
         return utils.tpl("member/login");
+    }
+
+    /**
+     * 비밀번호 만료시 변경 페이지
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/password")
+    public String password(Model model) {
+        commonProcess("password", model);
+
+        return utils.tpl("member/password");
     }
 
     /**
@@ -110,5 +122,11 @@ public class MemberController {
         model.addAttribute("addCommonScript", addCommonScript);
         model.addAttribute("addScript", addScript);
         model.addAttribute("pageTitle", pageTitle);
+    }
+
+    @GetMapping("/test")
+    public void test(Principal principal){
+        String email = principal.getName();
+        System.out.println(email);
     }
 }

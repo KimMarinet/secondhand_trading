@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
+
 @Data
 @Table("MEMBER")
 public class Member extends BaseEntity {
@@ -20,4 +22,9 @@ public class Member extends BaseEntity {
 
     @Column("termsAgree")
     private boolean termsAgree;
+
+    private boolean locked;
+    private LocalDateTime expired;
+    private LocalDateTime credentialChangedAt;
+
 }
