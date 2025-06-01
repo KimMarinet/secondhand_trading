@@ -12,7 +12,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,9 +123,9 @@ public class MemberController {
         model.addAttribute("pageTitle", pageTitle);
     }
 
-    @GetMapping("/test")
-    public void test(Principal principal){
-        String email = principal.getName();
-        System.out.println(email);
-    }
+//    @GetMapping("/test")
+//    public void test(Principal principal){
+//        String email = principal.getName();
+//        System.out.println(email);
+//    }
 }
