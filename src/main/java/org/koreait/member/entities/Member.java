@@ -25,6 +25,8 @@ public class Member extends BaseEntity {
 
     private boolean locked;
     private LocalDateTime expired;
+
+    @Column("credentialChangedAt")
     private LocalDateTime credentialChangedAt;
 
 }

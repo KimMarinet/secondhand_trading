@@ -19,12 +19,12 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class MemberInfoService implements UserDetailsService {
+
     private final MemberRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Member member = repository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException(username));
+        Member member = repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
 
         Authority authority = Objects.requireNonNullElse(member.getAuthority(), Authority.MEMBER);
 
@@ -34,6 +34,7 @@ public class MemberInfoService implements UserDetailsService {
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .member(member)
+                .authorities(authorities)
                 .build();
     }
 }
