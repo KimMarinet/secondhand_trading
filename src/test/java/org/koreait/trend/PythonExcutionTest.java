@@ -3,6 +3,8 @@ package org.koreait.trend;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.BufferedReader;
+
 @SpringBootTest
 public class PythonExcutionTest {
     @Test
@@ -16,6 +18,12 @@ public class PythonExcutionTest {
                 "C:/trend/trend.py", "C:/uploads/trend");
         process = builder.start();
         statusCode = process.waitFor();
+        if(statusCode == 0){
+            process.inputReader().lines().forEach(System.out::println);
+            return;
+        }
         System.out.println(statusCode);
+        BufferedReader br = process.errorReader();
+        br.lines().forEach(System.out::println);
     }
 }
