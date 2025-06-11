@@ -10,6 +10,6 @@ public class RequestLogin {
     private String password;
     private boolean autoLogin;
     private String redirectUrl;
-    private List<String> fieldErrors; // 규칙 : '필드명_에러코드' 형태로 선언하겠음
+    private List<String> fieldErrors; // 필드명_에러코드
     private List<String> globalErrors;
 }

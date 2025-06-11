@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-/**
- * 필요한 시기에 만들어지도록 설정 (처음부터 필요한 게 아니니까)
- */
 @Lazy
 @Component
 @RequiredArgsConstructor

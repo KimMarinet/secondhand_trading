@@ -9,11 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Transactional
 public class MemberRepositoryTest {
+
     @Autowired
     private MemberRepository repository;
 
     @Test
-    void test1(){
+    void test1() {
         Member member = new Member();
         member.setEmail("user01@test.org");
         member.setPassword("1234");

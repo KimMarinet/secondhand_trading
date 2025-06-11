@@ -4,22 +4,22 @@ server:
     session.cookie.name: b8a5f3fb
 
 spring:
-  #flyway 설정
+  # flyway 설정
   flyway:
     enabled: true
     baselineOnMigrate: true
 
-  # DB config
+  # 데이터베이스 설정
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${db.url}
     username: ${db.username}
     password: ${db.password}
 
-  # 타임 리프 설정
+  # 타임리프 설정
   thymeleaf:
     cache: false
-    prefix: "file:src/main/resources/templates/"
+    prefix: file:src/main/resources/templates/
 
   # 파일 업로드 용량 설정
   servlet:
@@ -28,7 +28,7 @@ spring:
       maxRequestSize: 60MB
       fileSizeThreshold: 30MB
 
-#로깅 설정
+# 로깅 설정
 logging:
   level:
     org.springframework.jdbc: TRACE
@@ -38,6 +38,7 @@ file:
   upload:
     url: ${file.url}
     path: ${file.path}
+
 
 # 파이썬 설정
 python:

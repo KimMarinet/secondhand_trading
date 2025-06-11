@@ -10,12 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(FileProperties.class)
 public class FileConfig implements WebMvcConfigurer {
-
-    private final  FileProperties properties;
+    private final FileProperties properties;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(properties.getUrl() + "/**")
-                .addResourceLocations("file:///" + properties.getPath()+"/");
+                .addResourceLocations("file:///" + properties.getPath() + "/");
     }
 }

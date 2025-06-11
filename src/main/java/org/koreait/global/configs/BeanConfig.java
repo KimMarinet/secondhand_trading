@@ -12,11 +12,8 @@ import org.springframework.context.annotation.Lazy;
 public class BeanConfig {
     @Lazy
     @Bean
-    public ModelMapper modelMapper(){
-
+    public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
-
-        //set과 get의 자료형이 다르면 setter하지 않음
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         return mapper;
@@ -24,10 +21,9 @@ public class BeanConfig {
 
     @Lazy
     @Bean
-    public ObjectMapper objectMapper(){
+    public ObjectMapper objectMapper() {
         ObjectMapper om = new ObjectMapper();
         om.registerModule(new JavaTimeModule()); // java.time 패키지 대응
-
         return om;
     }
 }

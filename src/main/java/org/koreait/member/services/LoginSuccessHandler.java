@@ -13,14 +13,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-
     /**
      * Authentication authentication
      * - 인증 정보가 담겨 있는 객체
+     *
      */
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         HttpSession session = request.getSession();
         RequestLogin form = (RequestLogin) session.getAttribute("requestLogin");

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MypageController {
-    private  final Utils utils;
+    private final Utils utils;
 
     @GetMapping
-    public String index(){
-        return  utils.tpl("mypage/index");
+    public String index() {
+        return utils.tpl("mypage/index");
     }
 }

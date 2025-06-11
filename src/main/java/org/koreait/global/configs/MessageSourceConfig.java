@@ -8,12 +8,13 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 @Configuration
 public class MessageSourceConfig {
     @Bean
-    public MessageSource messageSource(){
+    public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-        ms.addBasenames("message.commons", "message.errors", "message.validations");
+        ms.addBasenames("messages.commons", "messages.validations", "messages.errors");
         ms.setDefaultEncoding("UTF-8");
         ms.setUseCodeAsDefaultMessage(true);
 
         return ms;
     }
+
 }

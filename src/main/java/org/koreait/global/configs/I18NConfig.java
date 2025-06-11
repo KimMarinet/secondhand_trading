@@ -11,6 +11,7 @@ import java.time.Duration;
 
 /**
  * I18N - Internationalization : 국제화
+ *
  */
 @Configuration
 public class I18NConfig implements WebMvcConfigurer {
@@ -21,15 +22,15 @@ public class I18NConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor(){
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("lang"); // ?lang=en 을하면 영어로 수동 전환
+        interceptor.setParamName("lang"); // ?lang=en
 
         return interceptor;
     }
 
     @Bean
-    public CookieLocaleResolver localeResolver(){
+    public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver("lang");
         resolver.setCookieMaxAge(Duration.ofHours(1L));
 

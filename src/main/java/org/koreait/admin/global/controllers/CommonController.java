@@ -14,7 +14,7 @@ public abstract class CommonController {
     public abstract String mainCode();
 
     @ModelAttribute("subMenus")
-    public List<Menu> subMenus(){
+    public List<Menu> subMenus() {
         return Menus.getMenus(mainCode());
     }
 }

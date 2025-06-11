@@ -1,6 +1,5 @@
 package org.koreait.global.configs;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
@@ -27,7 +26,7 @@ public class MvcConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    public HiddenHttpMethodFilter hiddenHttpMethodFilter(){
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();
     }
 }
