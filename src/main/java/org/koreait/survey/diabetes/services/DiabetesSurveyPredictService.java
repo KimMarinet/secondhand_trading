@@ -44,14 +44,12 @@ public class DiabetesSurveyPredictService {
             if (process.waitFor() == 0) { // 정상 수행된 경우
 
                 String data = om.writeValueAsString(items);
-                System.out.println(data);
 
                 builder = new ProcessBuilder(pythonPath, properties.getRestaurant() + "/diabetes/predict.py", data);
                 process = builder.start();
                 int statusCode = process.waitFor();
                 if (statusCode == 0) {
                     String json = process.inputReader().lines().collect(Collectors.joining());
-                    System.out.println("json:" + json);
                     return om.readValue(json, new TypeReference<>() {});
 
                 } else {
@@ -83,15 +81,19 @@ public class DiabetesSurveyPredictService {
         item.add(form.getSmokingHistory().getNum());
 
         // BMI 지수 계산
-        double height = form.getHeight() / 100.0;
-        double weight = form.getWeight();
+        double bmi = getBmi(form.getHeight(), form.getWeight());
 
-        double bmi = Math.round((weight / Math.pow(height, 2)) * 100.0) / 100.0;
         item.add(bmi);
 
         item.add(form.getHbA1c());
         item.add(form.getBloodGlucoseLevel());
 
         return  isDiabetes(item);
+    }
+
+    public double getBmi(double height, double weight){
+        height = height / 100.0;
+
+        return Math.round((weight / Math.pow(height, 2.0)) * 100.0) / 100.0;
     }
 }
