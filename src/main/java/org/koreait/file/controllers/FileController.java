@@ -1,5 +1,11 @@
 package org.koreait.file.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.koreait.file.entities.FileInfo;
@@ -18,7 +24,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/file")
+@RequestMapping({"/api/file", "/file"})
+@Tag(name="파일 API", description = "파일 업로드, 다운로드, 조회 관련 기능을 제공")
 public class FileController {
     private final FileUploadService uploadService;
     private final FileDeleteService deleteService;
@@ -26,7 +33,10 @@ public class FileController {
     private final FileDownloadService downloadService;
     private final ThumbnailService thumbnailService;
 
+    @Operation(summary = "파일 업로드 처리", method = "MULTIPART")
+    @ApiResponse(responseCode = "201", description = "파일 업로드 성공시 업로드한 파일 목록이 출력")
     @PostMapping("/upload")
+    @ResponseStatus(HttpStatus.CREATED)
     public List<FileInfo> upload(RequestUpload form, @RequestPart("file") MultipartFile[] files) {
         form.setFiles(files);
         List<FileInfo> items = uploadService.process(form);
@@ -42,6 +52,10 @@ public class FileController {
         return items;
     }
 
+    @Operation(summary = "파일 등록번호로 파일 정보 한개 조회")
+    @Parameters({
+            @Parameter(name="seq", in= ParameterIn.PATH, required = true, description = "파일 등록 번호")
+    })
     @GetMapping("/info/{seq}")
     public FileInfo info(Long seq) {
         FileInfo item = infoService.get(seq);
