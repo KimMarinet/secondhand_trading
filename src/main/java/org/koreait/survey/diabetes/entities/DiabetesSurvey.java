@@ -2,6 +2,7 @@ package org.koreait.survey.diabetes.entities;
 
 import lombok.Data;
 import org.koreait.global.constants.Gender;
+import org.koreait.global.entities.BaseEntity;
 import org.koreait.member.entities.Member;
 import org.koreait.survey.diabetes.constants.SmokingHistory;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Table("SURVEY_DIABETES")
-public class DiabetesSurvey {
+public class DiabetesSurvey extends BaseEntity {
     @Id
     private Long seq;
 
@@ -23,7 +24,7 @@ public class DiabetesSurvey {
     private boolean hypertension;
 
     @Column("heartDisease")
-    private  boolean heartDisease;
+    private boolean heartDisease;
 
     @Column("smokingHistory")
     private SmokingHistory smokingHistory;
@@ -36,7 +37,7 @@ public class DiabetesSurvey {
     private double hbA1c;
 
     @Column("bloodGlucoseLevel")
-    private  double bloodGlucoseLevel;
+    private double bloodGlucoseLevel;
 
     private boolean diabetes;
 

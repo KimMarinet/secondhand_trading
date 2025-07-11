@@ -12,22 +12,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class DiabetesSurveyServiceTest {
 
     @Autowired
-    private DiavetesSurveyService surveyService;
+    private DiabetesSurveyService surveyService;
 
     @Test
-    void test(){
-        RequestDiabetesSurvey survey = new RequestDiabetesSurvey();
-        survey.setGender(Gender.MALE);
-        survey.setAge(41);
-        survey.setHypertension(false);
-        survey.setHeartDisease(false);
-        survey.setSmokingHistory(SmokingHistory.EVER);
-        survey.setHeight(178.5);
-        survey.setWeight(120);
-        survey.setHbA1c(8.2);
-        survey.setBloodGlucoseLevel(126.0);
+    void test() {
+        RequestDiabetesSurvey form = new RequestDiabetesSurvey();
+        form.setGender(Gender.MALE);
+        form.setAge(41);
+        form.setHypertension(false);
+        form.setHeartDisease(false);
+        form.setSmokingHistory(SmokingHistory.EVER);
+        form.setHeight(178.5);
+        form.setWeight(120);
+        form.setHbA1c(8.2);
+        form.setBloodGlucoseLevel(126);
 
-        DiabetesSurvey item = surveyService.process(survey);
+        DiabetesSurvey item = surveyService.process(form);
         System.out.println(item);
     }
 }

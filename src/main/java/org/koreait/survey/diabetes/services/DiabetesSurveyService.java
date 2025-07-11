@@ -13,18 +13,17 @@ import org.springframework.stereotype.Service;
 @Lazy
 @Service
 @RequiredArgsConstructor
-public class DiavetesSurveyService {
+public class DiabetesSurveyService {
 
     private final DiabetesSurveyPredictService predictService;
     private final DiabetesSurveyRepository repository;
     private final MemberUtil memberUtil;
     private final ModelMapper mapper;
 
-    public DiabetesSurvey process(RequestDiabetesSurvey form){
-
+    public DiabetesSurvey process(RequestDiabetesSurvey form) {
         /**
-         * 1. 설문 답변 = 예측 결과 가져오기
-         * 2. 로그인 회원 정보 가져오기
+         * 1. 설문 답변으로 당뇨 고위험군 예측 결과 가져오기
+         * 2. 로그인한 회원 정보 가져오기
          * 3. DB에 저장 처리
          */
 
@@ -36,7 +35,7 @@ public class DiavetesSurveyService {
 
         item.setDiabetes(diabetes);
         item.setBmi(bmi);
-        if(memberUtil.isLogin()){
+        if (memberUtil.isLogin()) {
             item.setMemberSeq(memberUtil.getMember().getSeq());
         }
 

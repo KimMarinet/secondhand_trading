@@ -9,13 +9,12 @@ import java.util.List;
 
 @SpringBootTest
 public class RestaurantInfoServiceTest {
-
     @Autowired
     private RestaurantInfoService infoService;
 
     @Test
-    void test(){
-        List<Restaurant> items = infoService.getNestest(35.097993954721815, 129.03321328510245, 20);
+    void test() {
+        List<Restaurant> items = infoService.getNestest(37.5202653, 126.7354697, 20);
         items.forEach(System.out::println);
     }
 }

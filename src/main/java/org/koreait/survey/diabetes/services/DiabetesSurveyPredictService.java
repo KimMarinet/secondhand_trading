@@ -20,12 +20,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(PythonProperties.class)
 public class DiabetesSurveyPredictService {
-
     private final PythonProperties properties;
     private final WebApplicationContext ctx;
     private final ObjectMapper om;
 
-    public List<Integer> process(List<List<Number>> items){
+    public List<Integer> process(List<List<Number>> items) {
 
         boolean isProduction = Arrays.stream(ctx.getEnvironment().getActiveProfiles()).anyMatch(s -> s.equals("prod") || s.equals("mac"));
 
@@ -65,35 +64,40 @@ public class DiabetesSurveyPredictService {
         return List.of();
     }
 
-    public  boolean isDiabetes(List<Number> item){
-        List<Integer> result = process(List.of(item));
+    /**
+     * 설문 하나에 대한 당뇨병 설문 결과
+     *
+     * @param item
+     * @return
+     */
+    public boolean isDiabetes(List<Number> item) {
+        List<Integer> results = process(List.of(item));
 
-        return !result.isEmpty() && result.getFirst() == 1;
+        return !results.isEmpty() && results.getFirst() == 1;
     }
 
-    public boolean isDiabetes(RequestDiabetesSurvey form){
+    public boolean isDiabetes(RequestDiabetesSurvey form) {
         List<Number> item = new ArrayList<>();
-
         item.add(form.getGender().getNum());
         item.add(form.getAge());
-        item.add(form.isHypertension() ? 1:0);
-        item.add(form.isHeartDisease() ? 1:0);
+        item.add(form.isHypertension() ? 1 : 0);
+        item.add(form.isHeartDisease() ? 1 : 0);
         item.add(form.getSmokingHistory().getNum());
 
         // BMI 지수 계산
         double bmi = getBmi(form.getHeight(), form.getWeight());
-
         item.add(bmi);
 
-        item.add(form.getHbA1c());
-        item.add(form.getBloodGlucoseLevel());
+        item.add(form.getHbA1c()); // 당화혈색소 수치
+        item.add(form.getBloodGlucoseLevel()); // 혈당 수치
 
-        return  isDiabetes(item);
+        return isDiabetes(item);
     }
 
-    public double getBmi(double height, double weight){
+    // BMI 지수 계산
+    public double getBmi(double height, double weight) {
         height = height / 100.0;
 
-        return Math.round((weight / Math.pow(height, 2.0)) * 100.0) / 100.0;
+       return Math.round((weight / Math.pow(height, 2.0)) * 100.0) / 100.0;
     }
 }

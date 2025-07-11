@@ -25,12 +25,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DiabetesSurveyInfoService {
+
     private final HttpServletRequest request;
     private final JdbcTemplate jdbcTemplate;
     private final MemberUtil memberUtil;
 
     /**
      * 설문지 한개 조회
+     * - 본인이 작성한 설문지만 조회
+     * - 현재 로그인 회원이 관리자이면 상관없이 조회 가능
      *
      * @param seq
      * @return
@@ -38,13 +41,14 @@ public class DiabetesSurveyInfoService {
     public DiabetesSurvey get(Long seq) {
         try {
             String sql = "SELECT s.*, m.email, m.name, m.mobile FROM SURVEY_DIABETES s " +
-                    " LEFT JOIN MEMBER m ON s.memberSeq = m.seq WHERE s.seq = ?";
+                        " LEFT JOIN MEMBER m ON s.memberSeq = m.seq WHERE s.seq = ?";
             DiabetesSurvey item = jdbcTemplate.queryForObject(sql, this::mapper, seq);
 
-            Member member = memberUtil.getMember(); // 로그인 회원 정보
-            if(!memberUtil.isLogin() || (!memberUtil.isAdmin() && !member.getSeq().equals(item.getMemberSeq()))){
+            Member member = memberUtil.getMember(); // 로그인한 회원 정보
+            if (!memberUtil.isLogin() || (!memberUtil.isAdmin() && !member.getSeq().equals(item.getMemberSeq()))) { // 로그인 상태가 아니거나, 관리자가 아닌 회원 로그인일때 설문지 작성 회원과 일치 하지 않다면
                 throw new UnAuthorizedException();
             }
+
 
             return item;
         } catch (DataAccessException e) { // 조회가 안된 경우

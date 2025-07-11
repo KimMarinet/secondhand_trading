@@ -7,11 +7,11 @@ public enum Gender {
 
     private final int num;
 
-    Gender(int num){
+    Gender(int num) {
         this.num = num;
     }
 
-    public int getNum(){
+    public int getNum() {
         return num;
     }
 }

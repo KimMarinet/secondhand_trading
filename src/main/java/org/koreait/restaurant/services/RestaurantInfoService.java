@@ -29,14 +29,14 @@ public class RestaurantInfoService {
 
     /**
      * 주어진 좌표 근처의 cnt개 만큼의 식당 조회
+     *
      * @param lat
      * @param lon
      * @param cnt
      * @return
      */
-    public List<Restaurant> getNestest(double lat, double lon, int cnt){
-
-        if(lat == 0.0 || lon == 0.0){
+    public List<Restaurant> getNestest(double lat, double lon, int cnt) {
+        if (lat == 0.0 || lon == 0.0) {
             return List.of();
         }
 
@@ -60,8 +60,9 @@ public class RestaurantInfoService {
                 int statusCode = process.waitFor();
                 if (statusCode == 0) {
                     String json = process.inputReader().lines().collect(Collectors.joining());
-                    List<Long> seqes = om.readValue(json, new TypeReference<List<Long>>() {      });
-                    return repository.findAllById(seqes);
+                    List<Long> seqs = om.readValue(json, new TypeReference<>() {});
+                    return repository.findAllById(seqs);
+
                 } else {
                     System.out.println("statusCode:" + statusCode);
                     process.errorReader().lines().forEach(System.out::println);
@@ -72,14 +73,14 @@ public class RestaurantInfoService {
             e.printStackTrace();
         }
 
-        return List.of(); // 기본값으로 아무것도 없는 List 반환
+        return List.of();
     }
 
-    public List<Restaurant> getNearest(double lat, double lon){
+    public List<Restaurant> getNearest(double lat, double lon) {
         return getNestest(lat, lon, 10);
     }
 
-    public List<Restaurant> getNearest(RestaurantSearch search){
+    public List<Restaurant> getNearest(RestaurantSearch search) {
         int cnt = search.getCnt();
         cnt = cnt < 1 ? 10 : cnt;
         return getNestest(search.getLat(), search.getLon(), cnt);

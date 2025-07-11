@@ -21,12 +21,12 @@ public class DataTransfer {
     private RestaurantRepository repository;
 
     @Test
-    void process() throws Exception{
+    void process() throws Exception {
         CsvMapper mapper = new CsvMapper();
 
         try (FileInputStream fis = new FileInputStream("C:/restaurant/data.csv");
-             InputStreamReader isr = new InputStreamReader(fis);
-             BufferedReader br = new BufferedReader(isr, 16000)) {
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr, 16000)) {
             int cnt = 0;
             String line = null;
             while((line = br.readLine()) != null) {
@@ -89,7 +89,7 @@ public class DataTransfer {
     private double[] transformTMToWGS84(double lat, double lon) {
         CRSFactory crsFactory = new CRSFactory();
 
-        // WGS84 좌표계 (EPSG:4326)
+        // WGS84 좌표계 (EPSG:4326) - 위도 경도
         CoordinateReferenceSystem crsWGS84 = crsFactory.createFromName("EPSG:4326");
 
         // TM 중부원점 좌표계 (EPSG:2097)
@@ -108,6 +108,6 @@ public class DataTransfer {
         // 좌표 변환 수행
         transform.transform(sourceCoordinate, targetCoordinate);
 
-        return new double[]{targetCoordinate.y, targetCoordinate.x} ;
+        return new double[]{targetCoordinate.y, targetCoordinate.x};
     }
 }
