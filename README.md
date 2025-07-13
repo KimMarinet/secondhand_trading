@@ -23,4 +23,17 @@
     - https://kms.koreait.xyz/member/login?redirectUrl=/survey/diabetes (로그인 후 이용 가능)
 
 #### 📷 구현 사진
+
+### ✅ 주변 식당
+
 ![Class](https://github.com/KimMarinet/secondhand_trading/blob/master/img/result.png)
+
+### ✅ 당뇨병 고위험군 설문
+
+<p align="center"><img src="https://github.com/KimMarinet/secondhand_trading/blob/master/img/diabetes_result1.png"/></p>
+
+
+<p align="center"><img src="https://github.com/KimMarinet/secondhand_trading/blob/master/img/diabetes_result2.png"/></p>
+
+
+<p align="center"><img src="https://github.com/KimMarinet/secondhand_trading/blob/master/img/diabetes_result3.png"/></p>
